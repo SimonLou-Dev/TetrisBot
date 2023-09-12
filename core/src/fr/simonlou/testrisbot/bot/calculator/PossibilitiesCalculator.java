@@ -20,26 +20,49 @@ public class PossibilitiesCalculator {
         Map<Integer, int[]> possibilites = new HashMap<>();
         int firstEmpty = ScoreCalculator.findFirstEmptyLine(grid);
 
+        System.out.println("First" + firstEmpty);
+
         for (int row = firstEmpty; row < GameScreen.GRID_HEIGHT; row++){
             for (int col = 0; col < GameScreen.GRID_WIDTH; col++){
-                if(piece == square ){
-                    if(canPlace(grid, row,col,piece)){
-                        int[] coords = {col, row, 0};
-                        if (Bot.checkColoisionBottom(piece, grid, row, col - 2))possibilites.put(possibilites.size(),  coords);
-                    }
-                }else{
-                    int[][] rotatedpieces = piece;
-                    for (int pitch = 0; pitch < 4; pitch++){
-                        int[] coords = {col, row, pitch};
-                        if(canPlace(grid, row,col,rotatedpieces)){
-                            if (Bot.checkColoisionBottom(rotatedpieces, grid, row, col - 2))possibilites.put(possibilites.size(),  coords);
+                int[][] rotatedpieces = piece;
+                for (int pitch = 0; pitch < 4; pitch++){
+                    int[] coords = {col, row, pitch};
+                    if(canPlace(grid, row,col,rotatedpieces)){
+                        System.out.println("Je prépush");
+                        for(int y = 0; y < piece.length; y++){
+                            for(int x = 0; x < piece.length; x++){
+                                if(piece[y][x] != 0){
+                                    int b_x = row + x;
+                                    int b_y = col - y;
+                                    if(b_y >= GameScreen.GRID_HEIGHT || b_x < 0 || b_y < 0 || b_x >= GameScreen.GRID_WIDTH) break;
+                                    int u_y = b_y-1;
+                                    //System.out.println("Under Y pos : " + u_y + " il y a ça " + (u_y >= 0 ? grid[u_y][b_x] : "le bas") + " condition : " + (u_y < 0 || grid[u_y][b_x] != 0));
+                                    //if(u_y <= 0 || grid[u_y][b_x] != 0) return true;
+                                    if(u_y <= 0){
+                                        System.out.println("Je push");
+                                        if(possibilites.containsValue(coords)) break;
+                                        possibilites.put(possibilites.size(),  coords);
+
+
+                                    }
+                                    //return  true;
+                                }
+                            }
                         }
-                        rotatedpieces = Bot.rotate(true, rotatedpieces);
+
+
+                        /*if (Bot.checkColoisionBottom(rotatedpieces, grid, row, col)){
+                            System.out.println("Je push");
+                            possibilites.put(possibilites.size(),  coords);
+                        }*/
                     }
+                    rotatedpieces = Bot.rotate(true, rotatedpieces);
                 }
 
             }
         }
+
+        System.out.println(possibilites.size());
 
         return possibilites;
     }
@@ -49,11 +72,11 @@ public class PossibilitiesCalculator {
 
 
     public static boolean canPlace(int[][] grid, int piece_x, int piece_y, int[][] piece){
-        if (Bot.checkColoisionBottom(piece, grid, piece_x, piece_y - 1)) return false;
+        //if (Bot.checkColoisionBottom(piece, grid, piece_x, piece_y - 1)) return false;
         for (int y = 0; y < piece.length; y++){
             for (int x = 0; x < piece.length; x++){
                 int b_x = piece_x + x;
-                int b_y = piece_y - y;
+                int b_y = piece_y - y - 1;
                 if(b_y  < 0 || b_y >= GameScreen.GRID_HEIGHT )return  false;
                 if(b_x < 0 || b_x >= GameScreen.GRID_WIDTH) return false;
                 if(grid[b_y][b_x] != 0 && piece[y][x] != 0) return false;

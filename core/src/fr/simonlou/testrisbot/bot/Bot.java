@@ -32,6 +32,8 @@ public class Bot {
             scoringGrid = copyGrid(Agrid, GameScreen.GRID_HEIGHT, GameScreen.GRID_WIDTH);
             int[] possibility = possibilities.get(i);
             scoringGrid = getScoringGridWithPieces(scoringGrid, possibility[1],  possibility[0], possibility[2], nextPieces);
+            System.out.println("La piece est en x " + possibility[1] + " y " + possibility[0] + " p " + possibility[2]);
+            Debugger.printGrid(scoringGrid);
             int score = ScoreCalculator.score(scoringGrid);
             possibilitesOrdoned.put(score, possibility);
 
@@ -39,8 +41,8 @@ public class Bot {
 
         System.out.println("Meilleure grille : " +possibilitesOrdoned.lastKey() + " pire grille " + possibilitesOrdoned.firstKey());
         int[] bestPossibilitie = possibilitesOrdoned.get(possibilitesOrdoned.lastKey());
-        int[][] bestGrid = getScoringGridWithPieces(Agrid, bestPossibilitie[1],  bestPossibilitie[0], bestPossibilitie[2], nextPieces);
-        Debugger.printGrid(bestGrid);
+        int[][] bestGrid = getScoringGridWithPieces(grid, bestPossibilitie[1],  bestPossibilitie[0], bestPossibilitie[2], nextPieces);
+        //Debugger.printGrid(bestGrid);
 
         return possibilitesOrdoned.get(possibilitesOrdoned.lastKey());
     }
@@ -81,17 +83,27 @@ public class Bot {
         return clearRows(scoringGrid);
     }
 
-    public static boolean checkColoisionBottom(int[][] piece, int[][] grid, int p_x, int p_y){
-        for(int i = 0; i < piece.length; i++){
-            for(int j = 0; j < piece.length; j++){
-                if(piece[i][j] != 0){
-                    int b_x = p_x + j;
-                    int b_y = p_y - i;
+    /*
+    TODO : mon problème c'est que dans mon tableau final j'ai des pièces qui flottent, j'aimerai avoir une grid à chaque fois pour savoir à quoi ça ressemble
 
-                    if(b_y < 0 || b_y >= GameScreen.GRID_HEIGHT ||
-                            b_x < 0 || b_x >= GameScreen.GRID_WIDTH ||
-                            grid[b_y][b_x] !=0)
+
+     */
+
+    public static boolean checkColoisionBottom(int[][] piece, int[][] grid, int piece_x, int piece_y){
+        for(int y = 0; y < piece.length; y++){
+            for(int x = 0; x < piece.length; x++){
+                if(piece[y][x] != 0){
+                    int b_x = piece_x + x;
+                    int b_y = piece_y - y;
+                    if(b_y >= GameScreen.GRID_HEIGHT || b_x < 0 || b_y < 0 || b_x >= GameScreen.GRID_WIDTH) break;
+                    int u_y = b_y-1;
+                    //System.out.println("Under Y pos : " + u_y + " il y a ça " + (u_y >= 0 ? grid[u_y][b_x] : "le bas") + " condition : " + (u_y < 0 || grid[u_y][b_x] != 0));
+                    //if(u_y <= 0 || grid[u_y][b_x] != 0) return true;
+                    if(u_y <= 0 ){
+                        System.out.println("CACA passe");
                         return true;
+                    }
+                    //return  true;
                 }
             }
         }
