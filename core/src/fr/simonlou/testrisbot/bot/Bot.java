@@ -32,8 +32,6 @@ public class Bot {
             scoringGrid = copyGrid(Agrid, GameScreen.GRID_HEIGHT, GameScreen.GRID_WIDTH);
             int[] possibility = possibilities.get(i);
             scoringGrid = getScoringGridWithPieces(scoringGrid, possibility[1],  possibility[0], possibility[2], nextPieces);
-            System.out.println("La piece est en x " + possibility[1] + " y " + possibility[0] + " p " + possibility[2]);
-            Debugger.printGrid(scoringGrid);
             int score = ScoreCalculator.score(scoringGrid);
             possibilitesOrdoned.put(score, possibility);
 
@@ -42,7 +40,7 @@ public class Bot {
         System.out.println("Meilleure grille : " +possibilitesOrdoned.lastKey() + " pire grille " + possibilitesOrdoned.firstKey());
         int[] bestPossibilitie = possibilitesOrdoned.get(possibilitesOrdoned.lastKey());
         int[][] bestGrid = getScoringGridWithPieces(grid, bestPossibilitie[1],  bestPossibilitie[0], bestPossibilitie[2], nextPieces);
-        //Debugger.printGrid(bestGrid);
+        Debugger.printGrid(bestGrid);
 
         return possibilitesOrdoned.get(possibilitesOrdoned.lastKey());
     }
@@ -96,14 +94,13 @@ public class Bot {
                     int b_x = piece_x + x;
                     int b_y = piece_y - y;
                     if(b_y >= GameScreen.GRID_HEIGHT || b_x < 0 || b_y < 0 || b_x >= GameScreen.GRID_WIDTH) break;
+
                     int u_y = b_y-1;
-                    //System.out.println("Under Y pos : " + u_y + " il y a ça " + (u_y >= 0 ? grid[u_y][b_x] : "le bas") + " condition : " + (u_y < 0 || grid[u_y][b_x] != 0));
-                    //if(u_y <= 0 || grid[u_y][b_x] != 0) return true;
-                    if(u_y <= 0 ){
-                        System.out.println("CACA passe");
+                    if(u_y < 0 || grid[u_y][b_x] !=  0 ){
                         return true;
                     }
-                    //return  true;
+
+                    //System.out.println("end with " + u_y);
                 }
             }
         }

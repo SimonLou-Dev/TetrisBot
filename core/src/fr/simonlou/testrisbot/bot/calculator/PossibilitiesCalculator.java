@@ -4,6 +4,7 @@ import fr.simonlou.testrisbot.bot.Bot;
 import fr.simonlou.testrisbot.screens.GameScreen;
 import fr.simonlou.testrisbot.utils.Debugger;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,15 +21,14 @@ public class PossibilitiesCalculator {
         Map<Integer, int[]> possibilites = new HashMap<>();
         int firstEmpty = ScoreCalculator.findFirstEmptyLine(grid);
 
-        System.out.println("First" + firstEmpty);
 
         for (int row = firstEmpty; row < GameScreen.GRID_HEIGHT; row++){
             for (int col = 0; col < GameScreen.GRID_WIDTH; col++){
                 int[][] rotatedpieces = piece;
+
                 for (int pitch = 0; pitch < 4; pitch++){
                     int[] coords = {col, row, pitch};
                     if(canPlace(grid, row,col,rotatedpieces)){
-                        System.out.println("Je prépush");
                         for(int y = 0; y < piece.length; y++){
                             for(int x = 0; x < piece.length; x++){
                                 if(piece[y][x] != 0){
@@ -36,35 +36,43 @@ public class PossibilitiesCalculator {
                                     int b_y = col - y;
                                     if(b_y >= GameScreen.GRID_HEIGHT || b_x < 0 || b_y < 0 || b_x >= GameScreen.GRID_WIDTH) break;
                                     int u_y = b_y-1;
-                                    //System.out.println("Under Y pos : " + u_y + " il y a ça " + (u_y >= 0 ? grid[u_y][b_x] : "le bas") + " condition : " + (u_y < 0 || grid[u_y][b_x] != 0));
-                                    //if(u_y <= 0 || grid[u_y][b_x] != 0) return true;
-                                    if(u_y <= 0){
-                                        System.out.println("Je push");
+
+                                    if(u_y == 0 || grid[u_y][b_x] !=  0){
+                                        int[][] Mygrid = Bot.copyGrid(grid.clone(), GameScreen.GRID_HEIGHT, GameScreen.GRID_WIDTH);
+                                        int[][] spetialgrid = Bot.getScoringGridWithPieces(Mygrid.clone(), row, col, pitch, piece);
+                                        Debugger.printGrid(spetialgrid);
                                         if(possibilites.containsValue(coords)) break;
+
                                         possibilites.put(possibilites.size(),  coords);
-
-
                                     }
-                                    //return  true;
+
                                 }
                             }
                         }
 
-
-                        /*if (Bot.checkColoisionBottom(rotatedpieces, grid, row, col)){
-                            System.out.println("Je push");
-                            possibilites.put(possibilites.size(),  coords);
-                        }*/
                     }
-                    rotatedpieces = Bot.rotate(true, rotatedpieces);
+                    int[][] testrotated = Bot.rotate(true, rotatedpieces.clone());
+
+                    if(PossibilitiesCalculator.piecesEquals(testrotated, rotatedpieces)) break;
+                    else rotatedpieces =  testrotated;
                 }
 
             }
         }
 
-        System.out.println(possibilites.size());
-
         return possibilites;
+    }
+
+    public static boolean piecesEquals(int[][] piece, int[][] otherPiece) {
+        if (piece.length != otherPiece.length) {
+            return false;
+        }
+        for (int i = 0; i < piece.length; i++) {
+            if (!Arrays.equals(piece[i], otherPiece[i])) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
