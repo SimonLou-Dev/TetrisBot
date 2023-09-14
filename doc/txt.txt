@@ -1,9 +1,17 @@
 On en est ou ?
 
 
+DRop parfois ça plante
+
 Human ? 
 	OK
 
 
-Bot: c'est ok mais je crois il y a un pc de rotation des pieces c'es un peu chelou comment il les mets P'tet le scoring ??
+Bot: 
+	- PB des pièces volantes
+	- scoring bizzare
+
+
+
+
 

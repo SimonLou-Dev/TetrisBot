@@ -1,5 +1,6 @@
 package fr.simonlou.testrisbot.listeners;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import fr.simonlou.testrisbot.Game;
 import fr.simonlou.testrisbot.screens.GameScreen;
@@ -18,31 +19,31 @@ public class KeyListeners implements InputProcessor {
         else if(GameScreen.isGamePlaying()){
             game.keyPressed.add(keycode);
             switch (keycode){
-                case 111: {
+                case Input.Keys.ESCAPE: {
                     GameScreen.pauseGame();
                     break;
                 }
-                case 130: {
+                case Input.Keys.DPAD_UP: {
                     if(!GameScreen.getGameType().isPlayer()) break;
                     GameScreen.rotateMoov = true;
                             break;
                 }
-                case 21: {
+                case Input.Keys.DPAD_LEFT: {
                     if(!GameScreen.getGameType().isPlayer()) break;
                     GameScreen.leftMoov = true;
                     break;
                 }
-                case 20: {
+                case Input.Keys.DPAD_DOWN: {
                     if(!GameScreen.getGameType().isPlayer()) break;
                     GameScreen.downMoov = true;
                     break;
                 }
-                case 22: {
+                case Input.Keys.DPAD_RIGHT: {
                     if(!GameScreen.getGameType().isPlayer()) break;
                     GameScreen.rightMoov = true;
                     break;
                 }
-                case 62 : {
+                case Input.Keys.CONTROL_RIGHT : {
                     if(!GameScreen.getGameType().isPlayer()) break;
                     GameScreen.dropMoov = true;
                     break;

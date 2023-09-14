@@ -39,7 +39,6 @@ public class Bot {
             possibilitesOrdoned.put(score, possibility);
 
         }
-        possibilitesOrdoned.
 
 
 
