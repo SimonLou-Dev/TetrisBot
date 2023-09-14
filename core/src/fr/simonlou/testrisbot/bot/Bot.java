@@ -4,9 +4,12 @@ import fr.simonlou.testrisbot.bot.calculator.PossibilitiesCalculator;
 import fr.simonlou.testrisbot.bot.calculator.ScoreCalculator;
 import fr.simonlou.testrisbot.screens.GameScreen;
 import fr.simonlou.testrisbot.utils.Debugger;
+import jdk.javadoc.internal.doclets.toolkit.util.Comparators;
 
 
+import java.util.Comparator;
 import java.util.Map;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class Bot {
@@ -36,6 +39,9 @@ public class Bot {
             possibilitesOrdoned.put(score, possibility);
 
         }
+        possibilitesOrdoned.
+
+
 
         System.out.println("Meilleure grille : " +possibilitesOrdoned.lastKey() + " pire grille " + possibilitesOrdoned.firstKey());
         int[] bestPossibilitie = possibilitesOrdoned.get(possibilitesOrdoned.lastKey());
