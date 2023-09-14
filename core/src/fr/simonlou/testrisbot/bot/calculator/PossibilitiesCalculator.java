@@ -38,9 +38,9 @@ public class PossibilitiesCalculator {
                                     int u_y = b_y-1;
 
                                     if(u_y == 0 || grid[u_y][b_x] !=  0){
-                                        int[][] Mygrid = Bot.copyGrid(grid.clone(), GameScreen.GRID_HEIGHT, GameScreen.GRID_WIDTH);
-                                        int[][] spetialgrid = Bot.getScoringGridWithPieces(Mygrid.clone(), row, col, pitch, piece);
-                                        Debugger.printGrid(spetialgrid);
+                                        //int[][] Mygrid = Bot.copyGrid(grid.clone(), GameScreen.GRID_HEIGHT, GameScreen.GRID_WIDTH);
+                                        //int[][] spetialgrid = Bot.getScoringGridWithPieces(Mygrid.clone(), row, col, pitch, piece);
+                                        //Debugger.printGrid(spetialgrid);
                                         if(possibilites.containsValue(coords)) break;
 
                                         possibilites.put(possibilites.size(),  coords);

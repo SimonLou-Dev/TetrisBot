@@ -23,7 +23,7 @@ public class ScoreCalculator {
             sc += 7*row*row*ct;
         }
 
-        return sc - 1300*countHoles(grid);
+        return sc - 3000*countHoles(grid);
     }
 
     public static int countHoles(int[][] grid) {

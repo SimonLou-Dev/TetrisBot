@@ -37,6 +37,8 @@ public class Bot {
             scoringGrid = getScoringGridWithPieces(scoringGrid, possibility[1],  possibility[0], possibility[2], nextPieces);
             int score = ScoreCalculator.score(scoringGrid);
             possibilitesOrdoned.put(score, possibility);
+            Debugger.printGrid(scoringGrid);
+            System.out.println("Score de cette grille : " + score);
 
         }
 
