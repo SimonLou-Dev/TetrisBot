@@ -15,7 +15,7 @@ Le but est de créer un jeux tétris capable de jouer tout seul à l'infinit
 ## La réalisation
 
 Pour commencer j'ai écrit comment je pensait faire fonctionner l'algorithme et le programme
-<a href="doc/">Il est possible de retrouver toutes mes recouches ici</a>
+<a href="doc/">Il est possible de retrouver toutes mes ressouces ici</a>
 
 ## Les modes de jeux
 
